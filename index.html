@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy Birthday, Yuwei</title>
+<style>
+body {
+margin: 0;
+height: 100vh;
+background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+overflow: hidden;
+font-family: 'Arial', sans-serif;
+color: #ffffff;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+text-align: center;
+}
+
+h1 {
+font-size: 3em;
+margin-bottom: 0.3em;
+cursor: pointer;
+transition: color 0.3s, transform 0.3s;
+}
+
+h1:hover {
+color: #ffcc00;
+transform: scale(1.05);
+}
+
+.message {
+font-size: 1.3em;
+max-width: 600px;
+padding: 0 1em;
+margin-top: 1em;
+opacity: 0;
+transition: opacity 1s;
+}
+
+.message.show {
+opacity: 1;
+}
+
+.stars {
+position: absolute;
+width: 100%;
+height: 100%;
+pointer-events: none;
+z-index: -1;
+}
+
+.star {
+position: absolute;
+width: 2px;
+height: 2px;
+background: white;
+border-radius: 50%;
+animation: blink 3s infinite;
+}
+
+@keyframes blink {
+0%, 100% { opacity: 0.2; }
+50% { opacity: 1; }
+}
+
+.shooting-star {
+position: absolute;
+width: 100px;
+height: 2px;
+background: linear-gradient(to left, white, transparent);
+opacity: 0;
+}
+</style>
+</head>
+<body>
+<audio autoplay loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_f7836a0fa7.mp3?filename=space-ambient-110856.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
+
+<div class="stars" id="stars"></div>
+<h1 onclick="showBirthdayMessage()">Happy Birthday, Yuwei!</h1>
+<div class="message" id="birthdayMessage">
+Wishing you a lot more moments of joy and happiness.<br />
+May your heart stay free, as boundless as the sky.
+</div>
+
+<script>
+function showBirthdayMessage() {
+document.getElementById('birthdayMessage').classList.add('show');
+}
+
+function createStars(count) {
+const starsContainer = document.getElementById('stars');
+for (let i = 0; i < count; i++) {
+const star = document.createElement('div');
+star.className = 'star';
+star.style.top = `${Math.random() * 100}%`;
+star.style.left = `${Math.random() * 100}%`;
+star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+starsContainer.appendChild(star);
+}
+}
+
+function createShootingStar() {
+const star = document.createElement('div');
+star.className = 'shooting-star';
+
+const startX = Math.random() * window.innerWidth * 0.8;
+const startY = Math.random() * window.innerHeight * 0.5;
+const duration = Math.random() * 1.5 + 0.5;
+
+star.style.top = `${startY}px`;
+star.style.left = `${startX}px`;
+star.style.transform = 'rotate(-45deg)';
+star.style.transition = `all ${duration}s linear`;
+
+document.body.appendChild(star);
+
+requestAnimationFrame(() => {
+star.style.opacity = '1';
+star.style.transform = `translate(200px, 200px) rotate(-45deg)`;
+star.style.opacity = '0';
+});
+
+setTimeout(() => {
+star.remove();
+}, duration * 1000);
+}
+
+setInterval(createShootingStar, 3000);
+createStars(100);
+</script>
+</body>
+</html>
